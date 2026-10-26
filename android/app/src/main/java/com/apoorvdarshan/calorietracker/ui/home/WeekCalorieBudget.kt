@@ -94,8 +94,8 @@ data class WeekBudget(
     }
 }
 
-private val BudgetGreen = Color(0xFF7ED957)
-private val BudgetAmber = Color(0xFFFFD54F)
+internal val BudgetGreen = Color(0xFF7ED957)
+internal val BudgetAmber = Color(0xFFFFD54F)
 
 @Composable
 fun WeekBudgetCard(budget: WeekBudget, modifier: Modifier = Modifier) {

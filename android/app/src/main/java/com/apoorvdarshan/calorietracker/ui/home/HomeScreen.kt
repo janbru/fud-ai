@@ -574,8 +574,7 @@ DisposableEffect(lifecycleOwner, vm) {
                     Spacer(Modifier.height(32.dp))
 CalorieHero(
                         current = ui.caloriesToday,
-                        goal = ui.profile?.effectiveCalories ?: 2000,
-                        burnSummary = ui.homeBurnSummary
+                        goal = ui.profile?.effectiveCalories ?: 2000
                     )
                     ui.dailySteps?.let { steps ->
                         Spacer(Modifier.height(8.dp))
@@ -617,6 +616,10 @@ CalorieHero(
                         Box(modifier = Modifier.clickable { showNutritionDetail = true }) {
                             ViewMoreButton()
                         }
+                    }
+                    ui.homeBurnSummary?.let { summary ->
+                        Spacer(Modifier.height(4.dp))
+                        EnergyBalanceCard(summary)
                     }
                 }
             }
@@ -1678,8 +1681,7 @@ private fun DailyStepsRow(steps: Int) {
 @Composable
 private fun CalorieHero(
     current: Int,
-    goal: Int,
-    burnSummary: HomeBurnSummary? = null
+    goal: Int
 ) {
     val ratio = if (goal > 0) (current.toFloat() / goal).coerceIn(0f, 1f) else 0f
     val energyUnit = LocalEnergyUnit.current
@@ -1798,38 +1800,7 @@ private fun CalorieHero(
                     color = AppColors.Calorie
                 )
             }
-            burnSummary?.let { summary ->
-                Text(
-                    text = homeBurnLineText(summary),
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.45f)
-                )
-            }
         }
-    }
-}
-
-@Composable
-private fun homeBurnLineText(summary: HomeBurnSummary): String {
-    val energyUnit = LocalEnergyUnit.current
-    val burned = energyUnit.displayValue(summary.burnedCalories).formattedWholeNumber()
-    val difference = energyUnit.displayValue(summary.differenceCalories).formattedWholeNumber()
-    return when (summary.direction) {
-        com.apoorvdarshan.calorietracker.services.CalorieBalanceDirection.DEFICIT ->
-            stringResource(
-                R.string.home_burn_deficit,
-                burned,
-                difference
-            )
-        com.apoorvdarshan.calorietracker.services.CalorieBalanceDirection.SURPLUS ->
-            stringResource(
-                R.string.home_burn_surplus,
-                burned,
-                difference
-            )
-        com.apoorvdarshan.calorietracker.services.CalorieBalanceDirection.BALANCED ->
-            stringResource(R.string.home_burn_balanced, burned)
     }
 }
 

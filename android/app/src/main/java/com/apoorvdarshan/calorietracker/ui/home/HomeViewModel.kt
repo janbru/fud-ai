@@ -55,10 +55,15 @@ import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.roundToInt
 
 data class HomeBurnSummary(
+    val eatenCalories: Int,
     val burnedCalories: Int,
+    /** The part of [burnedCalories] from activity; the rest is resting energy. */
+    val activeCalories: Int,
     val direction: CalorieBalanceDirection,
     val differenceCalories: Int
-)
+) {
+    val restingCalories: Int get() = burnedCalories - activeCalories
+}
 
 enum class FoodLogSortOrder(val storageValue: String, val displayName: String, val displayNameRes: Int) {
     STANDARD("standard", "Breakfast → Lunch → Dinner", R.string.sort_standard),
@@ -368,7 +373,9 @@ viewModelScope.launch {
             burnedCalories = burned
         )
         return HomeBurnSummary(
+            eatenCalories = balance.eatenCalories,
             burnedCalories = balance.burnedCalories,
+            activeCalories = energy.activeCalories.coerceIn(0, balance.burnedCalories),
             direction = balance.direction,
             differenceCalories = balance.differenceCalories
         )
