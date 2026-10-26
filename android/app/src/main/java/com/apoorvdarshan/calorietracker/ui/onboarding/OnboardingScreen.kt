@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -306,6 +307,7 @@ fun OnboardingScreen(container: AppContainer, onComplete: () -> Unit) {
                 Column(
                     Modifier
                         .fillMaxWidth()
+                        .navigationBarsPadding()
                         .padding(horizontal = 24.dp)
                         .padding(top = 28.dp, bottom = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -359,7 +361,8 @@ fun OnboardingScreen(container: AppContainer, onComplete: () -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp)
-                        .padding(bottom = 36.dp)
+                        .navigationBarsPadding()
+                        .padding(bottom = 16.dp)
                         .height(54.dp)
                         .clip(RoundedCornerShape(28.dp))
                         .background(
@@ -393,7 +396,8 @@ fun OnboardingScreen(container: AppContainer, onComplete: () -> Unit) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 24.dp)
-                            .padding(bottom = 36.dp),
+                            .navigationBarsPadding()
+                            .padding(bottom = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         if (waitingForByokKey) {

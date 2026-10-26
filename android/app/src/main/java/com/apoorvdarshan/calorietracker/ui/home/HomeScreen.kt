@@ -463,7 +463,9 @@ DisposableEffect(lifecycleOwner, vm) {
 
     val actionSize = 60.dp
     val actionGap = 12.dp
-    val actionBottom = 100.dp
+    // The Scaffold padding already carries the navigation-bar inset, so this only
+    // has to clear the docked tab bar (BottomNavDockedControlPadding) by a small gap.
+    val actionBottom = BottomNavDockedControlPadding + 10.dp
     val diaryBottomClearance = actionBottom + actionSize + actionGap +
         WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 
@@ -727,7 +729,6 @@ CalorieHero(
         Row(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .navigationBarsPadding()
                 .padding(end = 24.dp, bottom = actionBottom),
             horizontalArrangement = Arrangement.spacedBy(actionGap),
             verticalAlignment = Alignment.CenterVertically
