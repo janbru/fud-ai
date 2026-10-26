@@ -511,6 +511,8 @@
     <string name="context_note_placeholder">bijv. zonder olie, extra kaas, grote portie</string>
     <string name="food_delete_title">Voedsellog verwijderen?</string>
     <string name="food_delete_message">Hiermee verwijder je het voedsel uit je dagboek. Opgeslagen favorieten blijven behouden.</string>
+    <string name="goals_updated_message">Bijgewerkt naar %1$s.</string>
+    <string name="adaptive_goals_updated_message">Bijgewerkt naar %1$s op basis van je nieuwste gegevens.</string>
     <string name="food_delete_action">Voedsellog verwijderen</string>
     <string name="water_delete_title">Waterlog verwijderen?</string>
     <string name="water_delete_message">Hiermee verwijder je de wateritem uit je dagboek.</string>

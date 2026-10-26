@@ -472,6 +472,8 @@
     <string name="context_note_placeholder">e.g. no oil, extra cheese, large portion</string>
     <string name="food_delete_title">Delete Food Log?</string>
     <string name="food_delete_message">This removes the food from your diary. Saved favorites are kept.</string>
+    <string name="goals_updated_message">Updated to %1$s.</string>
+    <string name="adaptive_goals_updated_message">Updated to %1$s from your latest data.</string>
     <string name="food_delete_action">Delete Food Log</string>
     <string name="water_delete_title">Delete Water Log?</string>
     <string name="water_delete_message">This removes the water entry from your diary.</string>

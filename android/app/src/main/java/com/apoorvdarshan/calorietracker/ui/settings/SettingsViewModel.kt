@@ -1567,7 +1567,7 @@ class SettingsViewModel(val container: AppContainer) : ViewModel() {
                 customFat = result.fat
             )
             val energy = container.prefs.energyUnit.first().format(container.appContext.resources, result.calories)
-            val message = "Updated to $energy." + (result.reason?.let { " $it" } ?: "")
+            val message = container.appContext.getString(R.string.goals_updated_message, energy) + (result.reason?.let { " $it" } ?: "")
             container.profileRepository.save(next)
             // Goals are now fresh — capture this input baseline so the recalc nudge clears.
             lastRecalcSignature = next.goalInputSignature
