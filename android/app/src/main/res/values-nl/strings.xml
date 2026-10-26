@@ -422,6 +422,12 @@
     <string name="home_macro_over_format">%1$s te veel</string>
     <string name="home_macro_no_goal">Geen doel</string>
     <string name="home_macro_goal_reached">Doel bereikt</string>
+    <string name="week_budget_title">Weekbudget</string>
+    <string name="week_budget_used_format">%1$s van %2$s</string>
+    <string name="week_budget_left_format">%1$s over deze week</string>
+    <string name="week_budget_over_format">%1$s boven budget</string>
+    <string name="week_budget_average_format">Gemiddeld %1$s per resterende dag</string>
+    <string name="week_budget_room_format">Ruimte voor een geniet-moment: %1$s boven je dagdoel</string>
     <plurals name="serving_unit_cup">
         <item quantity="one">kopje</item>
         <item quantity="other">kopjes</item>

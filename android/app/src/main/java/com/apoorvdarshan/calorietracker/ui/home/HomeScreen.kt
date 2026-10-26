@@ -620,6 +620,22 @@ CalorieHero(
                 }
             }
 
+            // Calorie week budget: the week of the selected day against 7 x the daily goal.
+            ui.profile?.let { profile ->
+                item(key = "week-budget") {
+                    val weekBudget = remember(allEntries, selectedDate, profile.effectiveCalories, weekStartsOnMonday) {
+                        WeekBudget.compute(
+                            entries = allEntries,
+                            dailyGoal = profile.effectiveCalories,
+                            selectedDate = selectedDate,
+                            today = LocalDate.now(),
+                            firstDayOfWeek = if (weekStartsOnMonday) DayOfWeek.MONDAY else DayOfWeek.SUNDAY
+                        )
+                    }
+                    Box(Modifier.padding(top = 8.dp)) { WeekBudgetCard(weekBudget) }
+                }
+            }
+
             // Unified diary. Water and fasting remain excluded from nutrition totals and sharing.
             item { Spacer(Modifier.height(8.dp)) }
             if (diaryMealGroups.isEmpty()) {

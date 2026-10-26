@@ -398,6 +398,12 @@
     <string name="home_macro_over_format">%1$s over</string>
     <string name="home_macro_no_goal">No goal</string>
     <string name="home_macro_goal_reached">Goal reached</string>
+    <string name="week_budget_title">Week budget</string>
+    <string name="week_budget_used_format">%1$s of %2$s</string>
+    <string name="week_budget_left_format">%1$s left this week</string>
+    <string name="week_budget_over_format">%1$s over budget</string>
+    <string name="week_budget_average_format">Average %1$s per remaining day</string>
+    <string name="week_budget_room_format">Room for a treat: %1$s above your daily goal</string>
     <plurals name="serving_unit_cup">
         <item quantity="one">cup</item>
         <item quantity="other">cups</item>
