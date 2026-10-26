@@ -1041,7 +1041,7 @@ private fun WeightChartCanvas(entries: List<WeightEntry>, goalKg: Double?, useMe
     val spanDays = maxOf(1L, (tEnd - tStart) / 86_400_000L)
     val showsYear = spanDays > 150 &&
         Instant.ofEpochMilli(tStart).atZone(zone).year != Instant.ofEpochMilli(tEnd).atZone(zone).year
-    val xLabelFmt = DateTimeFormatter.ofPattern(if (showsYear) "MMM yyyy" else "MMM d", Locale.US).withZone(zone)
+    val xLabelFmt = DateTimeFormatter.ofPattern(if (showsYear) "MMM yyyy" else "MMM d", Locale.getDefault()).withZone(zone)
     // Dense ranges plot bucket averages so the line stays a readable curve;
     // dots only render while each reading is still distinguishable.
     val points = remember(sortedEntries, useMetric) {
@@ -1220,7 +1220,7 @@ private fun WeightChartCanvas(entries: List<WeightEntry>, goalKg: Double?, useMe
                         maxLines = 1
                     )
                     Text(
-                        String.format(Locale.US, "%.1f %s", point.value, if (useMetric) "kg" else "lbs"),
+                        String.format(Locale.getDefault(), "%.1f %s", point.value, if (useMetric) "kg" else "lbs"),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -1382,9 +1382,9 @@ private fun niceAxisTicks(min: Double, max: Double, count: Int): List<Double> {
 }
 
 private fun formatTick(value: Double): String =
-    if (value >= 1000) String.format(Locale.US, "%,d", value.toInt())
+    if (value >= 1000) String.format(Locale.getDefault(), "%,d", value.toInt())
     else if (value == value.toInt().toDouble()) value.toInt().toString()
-    else String.format(Locale.US, "%.1f", value)
+    else String.format(Locale.getDefault(), "%.1f", value)
 
 @Composable
 private fun WeightHistoryLink(count: Int, onClick: () -> Unit) {
@@ -1544,7 +1544,7 @@ internal fun CalorieBarChart(dailyCalories: List<Pair<LocalDate, Int>>, goal: In
     val density = androidx.compose.ui.platform.LocalDensity.current
     val ticks = niceAxisTicks(0.0, maxValue, count = 5)
     val yTop = ticks.last().coerceAtLeast(maxValue)
-    val xLabelFmt = DateTimeFormatter.ofPattern("MMM d", Locale.US)
+    val xLabelFmt = DateTimeFormatter.ofPattern("MMM d", Locale.getDefault())
     val haptic = LocalHapticFeedback.current
     var selectedIndex by remember(dailyCalories) { mutableStateOf<Int?>(null) }
     val inspectorDateFormat = remember {
@@ -1978,7 +1978,7 @@ private fun AllWeightHistorySheet(
     onDismiss: () -> Unit
 ) {
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val fmt = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.US).withZone(ZoneId.systemDefault())
+    val fmt = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.getDefault()).withZone(ZoneId.systemDefault())
     val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
     val sheetSurface = if (isDark) MaterialTheme.colorScheme.surface else Color(0xFFFAF3EE)
     ModalBottomSheet(
@@ -2041,7 +2041,7 @@ private fun AllBodyFatHistorySheet(
     onDismiss: () -> Unit
 ) {
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val fmt = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.US).withZone(ZoneId.systemDefault())
+    val fmt = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.getDefault()).withZone(ZoneId.systemDefault())
     val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
     val sheetSurface = if (isDark) MaterialTheme.colorScheme.surface else Color(0xFFFAF3EE)
     ModalBottomSheet(
@@ -2074,7 +2074,7 @@ private fun AllBodyFatHistorySheet(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(Modifier.weight(1f)) {
-                                Text(String.format(Locale.US, "%.1f%%", entry.bodyFatPercent), fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
+                                Text(String.format(Locale.getDefault(), "%.1f%%", entry.bodyFatPercent), fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
                                 Spacer(Modifier.height(2.dp))
                                 Text(fmt.format(entry.date), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.55f))
                             }
@@ -2104,7 +2104,7 @@ private fun AllWorkoutHistorySheet(
     onDismiss: () -> Unit
 ) {
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val displayDate = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.US)
+    val displayDate = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.getDefault())
     val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
     val sheetSurface = if (isDark) MaterialTheme.colorScheme.surface else Color(0xFFFAF3EE)
     ModalBottomSheet(
@@ -2258,15 +2258,15 @@ private fun AddWeightDialog(
 }
 
 private fun formatWeight(kg: Double, useMetric: Boolean): String =
-    if (useMetric) String.format(Locale.US, "%.1f kg", kg)
-    else String.format(Locale.US, "%.1f lbs", kg * 2.20462)
+    if (useMetric) String.format(Locale.getDefault(), "%.1f kg", kg)
+    else String.format(Locale.getDefault(), "%.1f lbs", kg * 2.20462)
 
 internal fun formatWeightChange(deltaKg: Double, useMetric: Boolean): String {
     val displayValue = if (useMetric) deltaKg else deltaKg * 2.20462
     val roundedValue = if (Math.abs(displayValue) < 0.05) 0.0 else displayValue
     val sign = if (roundedValue > 0) "+" else ""
     val unit = if (useMetric) "kg" else "lbs"
-    return String.format(Locale.US, "%s%.1f %s", sign, roundedValue, unit)
+    return String.format(Locale.getDefault(), "%s%.1f %s", sign, roundedValue, unit)
 }
 
 // MARK: - Body Fat surfaces ----------------------------------------------
@@ -2375,7 +2375,7 @@ private fun BodyFatChartCanvas(entries: List<BodyFatEntry>, goalFraction: Double
     val spanDays = maxOf(1L, (tEnd - tStart) / 86_400_000L)
     val showsYear = spanDays > 150 &&
         Instant.ofEpochMilli(tStart).atZone(zone).year != Instant.ofEpochMilli(tEnd).atZone(zone).year
-    val xLabelFmt = DateTimeFormatter.ofPattern(if (showsYear) "MMM yyyy" else "MMM d", Locale.US).withZone(zone)
+    val xLabelFmt = DateTimeFormatter.ofPattern(if (showsYear) "MMM yyyy" else "MMM d", Locale.getDefault()).withZone(zone)
     val points = remember(sortedEntries) {
         downsampleTrend(sortedEntries.map { TrendPoint(it.date.toEpochMilli(), it.bodyFatFraction * 100) })
     }
@@ -2538,7 +2538,7 @@ private fun BodyFatChartCanvas(entries: List<BodyFatEntry>, goalFraction: Double
                         maxLines = 1
                     )
                     Text(
-                        String.format(Locale.US, "%.1f%%", point.value),
+                        String.format(Locale.getDefault(), "%.1f%%", point.value),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -2570,7 +2570,7 @@ private fun BodyFatChartCanvas(entries: List<BodyFatEntry>, goalFraction: Double
 private fun formatPercentTick(value: Double): String {
     val rounded = (value * 10).toInt() / 10.0
     return if (rounded == rounded.toInt().toDouble()) "${rounded.toInt()}%"
-    else String.format(Locale.US, "%.1f%%", rounded)
+    else String.format(Locale.getDefault(), "%.1f%%", rounded)
 }
 
 @Composable
@@ -2609,25 +2609,25 @@ private fun AddBodyFatDialog(
 }
 
 private fun formatPercent(fraction: Double): String =
-    String.format(Locale.US, "%.1f%%", fraction * 100)
+    String.format(Locale.getDefault(), "%.1f%%", fraction * 100)
 
 private fun formatPercentValue(percent: Double): String =
-    String.format(Locale.US, "%.1f%%", percent)
+    String.format(Locale.getDefault(), "%.1f%%", percent)
 
 private fun formatPercentChange(deltaPercent: Double): String {
     val roundedValue = if (Math.abs(deltaPercent) < 0.05) 0.0 else deltaPercent
     val sign = if (roundedValue > 0) "+" else ""
-    return String.format(Locale.US, "%s%.1f%%", sign, roundedValue)
+    return String.format(Locale.getDefault(), "%s%.1f%%", sign, roundedValue)
 }
 
 // ── Body Measurements (optional tape-measure tracking) ──────────────────
 
 private val measurementHistoryFmt: DateTimeFormatter =
-    DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.US).withZone(ZoneId.systemDefault())
+    DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.getDefault()).withZone(ZoneId.systemDefault())
 
 private fun displayLengthCm(context: android.content.Context, cm: Double, useMetric: Boolean): String =
-    if (useMetric) String.format(Locale.US, "%.1f %s", cm, context.getString(R.string.unit_cm))
-    else String.format(Locale.US, "%.1f %s", cm / 2.54, context.getString(R.string.unit_in))
+    if (useMetric) String.format(Locale.getDefault(), "%.1f %s", cm, context.getString(R.string.unit_cm))
+    else String.format(Locale.getDefault(), "%.1f %s", cm / 2.54, context.getString(R.string.unit_in))
 
 /** Logged sites in display order, skipping any that weren't entered. */
 private fun measurementSiteList(context: android.content.Context, m: BodyMeasurement): List<Pair<String, Double>> = buildList {
@@ -2643,15 +2643,15 @@ private fun measurementSiteList(context: android.content.Context, m: BodyMeasure
 
 /** Derived metrics computable from this entry + profile, skipping any missing their inputs. */
 private fun derivedMetricList(context: android.content.Context, m: BodyMeasurement, gender: Gender, heightCm: Double): List<Pair<String, String>> = buildList {
-    m.waistToHipRatio?.let { add(context.getString(R.string.derived_waist_to_hip) to String.format(Locale.US, "%.2f", it)) }
-    m.waistToHeightRatio(heightCm)?.let { add(context.getString(R.string.derived_waist_to_height) to String.format(Locale.US, "%.2f", it)) }
-    m.usNavyBodyFatPercent(gender, heightCm)?.let { add(context.getString(R.string.derived_body_fat) to String.format(Locale.US, "%.0f%%", it)) }
+    m.waistToHipRatio?.let { add(context.getString(R.string.derived_waist_to_hip) to String.format(Locale.getDefault(), "%.2f", it)) }
+    m.waistToHeightRatio(heightCm)?.let { add(context.getString(R.string.derived_waist_to_height) to String.format(Locale.getDefault(), "%.2f", it)) }
+    m.usNavyBodyFatPercent(gender, heightCm)?.let { add(context.getString(R.string.derived_body_fat) to String.format(Locale.getDefault(), "%.0f%%", it)) }
     m.wristFrame(gender, heightCm)?.let { add(context.getString(R.string.derived_frame) to context.getString(it.labelRes)) }
 }
 
 private fun measurementHistorySummary(context: android.content.Context, m: BodyMeasurement, gender: Gender, heightCm: Double, useMetric: Boolean): String {
     val sites = measurementSiteList(context, m).map { "${it.first} ${displayLengthCm(context, it.second, useMetric)}" }
-    val bf = m.usNavyBodyFatPercent(gender, heightCm)?.let { "BF ${String.format(Locale.US, "%.0f%%", it)}" }
+    val bf = m.usNavyBodyFatPercent(gender, heightCm)?.let { "BF ${String.format(Locale.getDefault(), "%.0f%%", it)}" }
     return (sites + listOfNotNull(bf)).joinToString(" · ")
 }
 
@@ -2741,7 +2741,7 @@ fun BodyMeasurementsScreen(container: AppContainer, onBack: () -> Unit) {
     val inUnit = stringResource(R.string.unit_in)
     fun displayValue(site: BodyMeasurement.Site): String {
         val cm = latest?.value(site) ?: return notSet
-        return if (heightMetric) String.format(Locale.US, "%.0f %s", cm, cmUnit) else String.format(Locale.US, "%.0f %s", cm / 2.54, inUnit)
+        return if (heightMetric) String.format(Locale.getDefault(), "%.0f %s", cm, cmUnit) else String.format(Locale.getDefault(), "%.0f %s", cm / 2.54, inUnit)
     }
 
     Scaffold(containerColor = MaterialTheme.colorScheme.background) { padding ->

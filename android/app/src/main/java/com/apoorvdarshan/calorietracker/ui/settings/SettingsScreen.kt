@@ -762,8 +762,8 @@ fun SettingsScreen(
                     HorizontalDivider()
                     SettingRow(
                         stringResource(R.string.settings_weight),
-                        if (ui.weightMetric) String.format(Locale.US, "%.1f kg", p.weightKg)
-                        else String.format(Locale.US, "%.1f lbs", p.weightKg * 2.20462),
+                        if (ui.weightMetric) String.format(Locale.getDefault(), "%.1f kg", p.weightKg)
+                        else String.format(Locale.getDefault(), "%.1f lbs", p.weightKg * 2.20462),
                         icon = Icons.Outlined.MonitorWeight
                     ) { sheet = SettingsSheet.WEIGHT }
                     HorizontalDivider()
@@ -829,8 +829,8 @@ fun SettingsScreen(
                         SettingRow(
                             stringResource(R.string.settings_goal_weight),
                             p.goalWeightKg?.let {
-                                if (ui.weightMetric) String.format(Locale.US, "%.1f kg", it)
-                                else String.format(Locale.US, "%.1f lbs", it * 2.20462)
+                                if (ui.weightMetric) String.format(Locale.getDefault(), "%.1f kg", it)
+                                else String.format(Locale.getDefault(), "%.1f lbs", it * 2.20462)
                             } ?: stringResource(R.string.settings_not_set),
                             icon = Icons.AutoMirrored.Outlined.TrendingUp
                         ) { sheet = SettingsSheet.GOAL_WEIGHT }
@@ -4539,9 +4539,9 @@ private fun LocalModelRow(
 }
 
 private fun formatModelBytes(bytes: Long): String = if (bytes >= 1_000_000_000L) {
-    String.format(Locale.US, "%.1f GB", bytes / 1_000_000_000.0)
+    String.format(Locale.getDefault(), "%.1f GB", bytes / 1_000_000_000.0)
 } else {
-    String.format(Locale.US, "%.0f MB", bytes / 1_000_000.0)
+    String.format(Locale.getDefault(), "%.0f MB", bytes / 1_000_000.0)
 }
 
 @Composable

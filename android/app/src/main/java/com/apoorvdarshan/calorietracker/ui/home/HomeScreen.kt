@@ -2405,7 +2405,7 @@ private fun WaterLogRow(
     val ctx = LocalContext.current
     val time = remember(entry.date, ctx) {
         DateTimeFormatter
-            .ofPattern(clockTimePattern(ctx), Locale.US)
+            .ofPattern(clockTimePattern(ctx), Locale.getDefault())
             .withZone(ZoneId.systemDefault())
             .format(entry.date)
     }
@@ -2477,7 +2477,7 @@ private fun FoodRow(
     selected: Boolean = false
 ) {
     val ctx = LocalContext.current
-    val timeFmt = DateTimeFormatter.ofPattern(clockTimePattern(ctx), Locale.US).withZone(ZoneId.systemDefault())
+    val timeFmt = DateTimeFormatter.ofPattern(clockTimePattern(ctx), Locale.getDefault()).withZone(ZoneId.systemDefault())
     val container = (ctx.applicationContext as com.apoorvdarshan.calorietracker.FudAIApp).container
     val scope = rememberCoroutineScope()
     val hasPhotos = entry.allImageFilenames.isNotEmpty()
@@ -2716,7 +2716,7 @@ private fun CopyFromDaySheet(
     var sourceDate by remember(targetDate) { mutableStateOf(targetDate.minusDays(1)) }
     var showDatePicker by remember { mutableStateOf(false) }
     val zone = ZoneId.systemDefault()
-    val dateFmt = remember { DateTimeFormatter.ofPattern("MMM d", Locale.US) }
+    val dateFmt = remember { DateTimeFormatter.ofPattern("MMM d", Locale.getDefault()) }
     val sourceEntries = remember(allEntries, sourceDate) {
         allEntries
             .filter { it.timestamp.atZone(zone).toLocalDate() == sourceDate }
