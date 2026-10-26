@@ -605,7 +605,7 @@ fun FoodResultSheet(
                     )
                     SheetPillCard {
                         Text(
-                            previewEntry.allergenAnalysis(profile.allergenSensitivities).summary,
+                            previewEntry.allergenAnalysis(profile.allergenSensitivities).summary(androidx.compose.ui.platform.LocalContext.current),
                             modifier = Modifier.padding(18.dp),
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.78f)
                         )

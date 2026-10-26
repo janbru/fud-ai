@@ -470,6 +470,9 @@
     <string name="context_note_title">Add Note</string>
     <string name="context_note_section">Add a note (optional)</string>
     <string name="context_note_placeholder">e.g. no oil, extra cheese, large portion</string>
+    <string name="allergen_declared_match">Declared allergen match</string>
+    <string name="allergen_possible">Possible allergen</string>
+    <string name="allergen_unable_to_assess">Unable to assess</string>
 
     <!-- Voice input sheet -->
     <string name="voice_listening">Listening…</string>

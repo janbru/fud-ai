@@ -559,7 +559,7 @@ fun EditFoodEntrySheet(
                 item {
                     SheetPillCard {
                         Text(
-                            currentBaseEntry.allergenAnalysis(profile.allergenSensitivities).summary,
+                            currentBaseEntry.allergenAnalysis(profile.allergenSensitivities).summary(LocalContext.current),
                             modifier = Modifier.padding(18.dp),
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.78f)
                         )
