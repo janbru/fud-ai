@@ -196,7 +196,6 @@ import com.apoorvdarshan.calorietracker.ui.components.FudGlassTextField
 import com.apoorvdarshan.calorietracker.ui.components.WeekEnergyStrip
 import com.apoorvdarshan.calorietracker.ui.navigation.BottomNavDockedControlPadding
 import com.apoorvdarshan.calorietracker.ui.theme.AppColors
-import com.apoorvdarshan.calorietracker.ui.voice.VoiceAssistantButton
 import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
@@ -424,7 +423,6 @@ DisposableEffect(lifecycleOwner, vm) {
     }
 
     // The voice assistant opens a logged food's edit sheet here (open_food_entry).
-    val voiceUi by container.voiceAssistant.ui.collectAsState()
     val pendingVoiceEntry by container.navigator.pendingFoodEntry.collectAsState()
     LaunchedEffect(pendingVoiceEntry, allEntries) {
         val id = pendingVoiceEntry ?: return@LaunchedEffect
@@ -733,9 +731,6 @@ CalorieHero(
             horizontalArrangement = Arrangement.spacedBy(actionGap),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (!voiceUi.visible) {
-                VoiceAssistantButton(onClick = container.voiceAssistant::requestStart)
-            }
             Box {
             Box(
                 modifier = Modifier
