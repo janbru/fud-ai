@@ -279,8 +279,15 @@ internal fun ServingQuantityCard(
         ?: ServingUnitOption.grams
     val parsedQuantity = ServingAmountExpression.evaluate(quantityText)
     val servingLabel = stringResource(R.string.sheet_serving)
-    fun displayUnit(option: ServingUnitOption, quantity: Double?): String =
-        if (option.normalizedUnit == "serving") servingLabel else option.displayUnit(quantity)
+    val unitResources = LocalContext.current.resources
+    fun displayUnit(option: ServingUnitOption, quantity: Double?): String {
+        if (option.normalizedUnit == "serving") return servingLabel
+        // AI-suggested units arrive as English words; show the localized name when we know it.
+        val plural = servingUnitPluralRes(option.normalizedUnit)
+            ?: return option.displayUnit(quantity)
+        val count = if (quantity == null || kotlin.math.abs(quantity - 1.0) <= 0.0001) 1 else 2
+        return unitResources.getQuantityString(plural, count)
+    }
     val selectedUnitLabel = displayUnit(selectedOption, parsedQuantity)
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -844,3 +851,20 @@ internal fun sheetMealIcon(meal: MealType): ImageVector = when (meal) {
 internal fun sheetFormatGrams(value: Double): String =
     if (value == value.toInt().toDouble()) value.toInt().toString()
     else String.format("%.1f", value)
+
+@androidx.annotation.PluralsRes
+private fun servingUnitPluralRes(normalizedUnit: String): Int? = when (normalizedUnit) {
+    "cup", "cups" -> R.plurals.serving_unit_cup
+    "slice", "slices" -> R.plurals.serving_unit_slice
+    "piece", "pieces" -> R.plurals.serving_unit_piece
+    "tbsp" -> R.plurals.serving_unit_tbsp
+    "tsp" -> R.plurals.serving_unit_tsp
+    "can", "cans" -> R.plurals.serving_unit_can
+    "packet", "packets" -> R.plurals.serving_unit_packet
+    "glass", "glasses" -> R.plurals.serving_unit_glass
+    "bowl", "bowls" -> R.plurals.serving_unit_bowl
+    "scoop", "scoops" -> R.plurals.serving_unit_scoop
+    "bar", "bars" -> R.plurals.serving_unit_bar
+    "bottle", "bottles" -> R.plurals.serving_unit_bottle
+    else -> null
+}

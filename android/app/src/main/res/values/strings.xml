@@ -398,6 +398,54 @@
     <string name="home_macro_over_format">%1$s over</string>
     <string name="home_macro_no_goal">No goal</string>
     <string name="home_macro_goal_reached">Goal reached</string>
+    <plurals name="serving_unit_cup">
+        <item quantity="one">cup</item>
+        <item quantity="other">cups</item>
+    </plurals>
+    <plurals name="serving_unit_slice">
+        <item quantity="one">slice</item>
+        <item quantity="other">slices</item>
+    </plurals>
+    <plurals name="serving_unit_piece">
+        <item quantity="one">piece</item>
+        <item quantity="other">pieces</item>
+    </plurals>
+    <plurals name="serving_unit_tbsp">
+        <item quantity="one">tbsp</item>
+        <item quantity="other">tbsp</item>
+    </plurals>
+    <plurals name="serving_unit_tsp">
+        <item quantity="one">tsp</item>
+        <item quantity="other">tsp</item>
+    </plurals>
+    <plurals name="serving_unit_can">
+        <item quantity="one">can</item>
+        <item quantity="other">cans</item>
+    </plurals>
+    <plurals name="serving_unit_packet">
+        <item quantity="one">packet</item>
+        <item quantity="other">packets</item>
+    </plurals>
+    <plurals name="serving_unit_glass">
+        <item quantity="one">glass</item>
+        <item quantity="other">glasses</item>
+    </plurals>
+    <plurals name="serving_unit_bowl">
+        <item quantity="one">bowl</item>
+        <item quantity="other">bowls</item>
+    </plurals>
+    <plurals name="serving_unit_scoop">
+        <item quantity="one">scoop</item>
+        <item quantity="other">scoops</item>
+    </plurals>
+    <plurals name="serving_unit_bar">
+        <item quantity="one">bar</item>
+        <item quantity="other">bars</item>
+    </plurals>
+    <plurals name="serving_unit_bottle">
+        <item quantity="one">bottle</item>
+        <item quantity="other">bottles</item>
+    </plurals>
     <string name="home_view_more">View More</string>
     <string name="home_burn_deficit">%1$s burned · %2$s deficit</string>
     <string name="home_burn_surplus">%1$s burned · %2$s surplus</string>

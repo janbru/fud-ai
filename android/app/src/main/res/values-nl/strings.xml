@@ -422,6 +422,54 @@
     <string name="home_macro_over_format">%1$s te veel</string>
     <string name="home_macro_no_goal">Geen doel</string>
     <string name="home_macro_goal_reached">Doel bereikt</string>
+    <plurals name="serving_unit_cup">
+        <item quantity="one">kopje</item>
+        <item quantity="other">kopjes</item>
+    </plurals>
+    <plurals name="serving_unit_slice">
+        <item quantity="one">plak</item>
+        <item quantity="other">plakken</item>
+    </plurals>
+    <plurals name="serving_unit_piece">
+        <item quantity="one">stuk</item>
+        <item quantity="other">stuks</item>
+    </plurals>
+    <plurals name="serving_unit_tbsp">
+        <item quantity="one">el</item>
+        <item quantity="other">el</item>
+    </plurals>
+    <plurals name="serving_unit_tsp">
+        <item quantity="one">tl</item>
+        <item quantity="other">tl</item>
+    </plurals>
+    <plurals name="serving_unit_can">
+        <item quantity="one">blik</item>
+        <item quantity="other">blikken</item>
+    </plurals>
+    <plurals name="serving_unit_packet">
+        <item quantity="one">pakje</item>
+        <item quantity="other">pakjes</item>
+    </plurals>
+    <plurals name="serving_unit_glass">
+        <item quantity="one">glas</item>
+        <item quantity="other">glazen</item>
+    </plurals>
+    <plurals name="serving_unit_bowl">
+        <item quantity="one">kom</item>
+        <item quantity="other">kommen</item>
+    </plurals>
+    <plurals name="serving_unit_scoop">
+        <item quantity="one">schep</item>
+        <item quantity="other">scheppen</item>
+    </plurals>
+    <plurals name="serving_unit_bar">
+        <item quantity="one">reep</item>
+        <item quantity="other">repen</item>
+    </plurals>
+    <plurals name="serving_unit_bottle">
+        <item quantity="one">fles</item>
+        <item quantity="other">flessen</item>
+    </plurals>
     <string name="home_view_more">Meer bekijken</string>
     <string name="home_burn_deficit">%1$s verbrand · %2$s tekort</string>
     <string name="home_burn_surplus">%1$s verbrand · %2$s overschot</string>
