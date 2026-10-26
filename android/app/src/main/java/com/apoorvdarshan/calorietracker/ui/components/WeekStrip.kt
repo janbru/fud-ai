@@ -32,9 +32,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.apoorvdarshan.calorietracker.R
 import com.apoorvdarshan.calorietracker.ui.theme.AppColors
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -178,7 +180,7 @@ private fun DayTile(
         // .font(.system(.caption2, design: .rounded, weight: .medium))
         // .foregroundStyle(isSelected ? AppColors.calorie : Color.secondary.opacity(0.6))
         Text(
-            narrowDay(date.dayOfWeek),
+            stringResource(narrowDayRes(date.dayOfWeek)),
             fontSize = 11.sp,
             fontWeight = FontWeight.Medium,
             color = if (isSelected) AppColors.Calorie
@@ -227,12 +229,12 @@ private fun DayTile(
 }
 
 /** SwiftUI's `.dateTime.weekday(.narrow)` — single-letter short day name. */
-private fun narrowDay(dow: DayOfWeek): String = when (dow) {
-    DayOfWeek.MONDAY -> "M"
-    DayOfWeek.TUESDAY -> "T"
-    DayOfWeek.WEDNESDAY -> "W"
-    DayOfWeek.THURSDAY -> "T"
-    DayOfWeek.FRIDAY -> "F"
-    DayOfWeek.SATURDAY -> "S"
-    DayOfWeek.SUNDAY -> "S"
+private fun narrowDayRes(dow: DayOfWeek): Int = when (dow) {
+    DayOfWeek.MONDAY -> R.string.dow_narrow_monday
+    DayOfWeek.TUESDAY -> R.string.dow_narrow_tuesday
+    DayOfWeek.WEDNESDAY -> R.string.dow_narrow_wednesday
+    DayOfWeek.THURSDAY -> R.string.dow_narrow_thursday
+    DayOfWeek.FRIDAY -> R.string.dow_narrow_friday
+    DayOfWeek.SATURDAY -> R.string.dow_narrow_saturday
+    DayOfWeek.SUNDAY -> R.string.dow_narrow_sunday
 }

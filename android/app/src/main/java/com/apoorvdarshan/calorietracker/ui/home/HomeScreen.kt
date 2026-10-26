@@ -1557,7 +1557,7 @@ private fun WeekStripSection(selectedDate: LocalDate, onSelect: (LocalDate) -> U
                     )
             ) {
                 Text(
-                    shortDay(date.dayOfWeek),
+                    stringResource(narrowDayRes(date.dayOfWeek)),
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Medium,
                     color = if (isSel) AppColors.Calorie else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
@@ -1593,14 +1593,14 @@ private fun WeekStripSection(selectedDate: LocalDate, onSelect: (LocalDate) -> U
     }
 }
 
-private fun shortDay(dow: DayOfWeek): String = when (dow) {
-    DayOfWeek.MONDAY -> "M"
-    DayOfWeek.TUESDAY -> "T"
-    DayOfWeek.WEDNESDAY -> "W"
-    DayOfWeek.THURSDAY -> "T"
-    DayOfWeek.FRIDAY -> "F"
-    DayOfWeek.SATURDAY -> "S"
-    DayOfWeek.SUNDAY -> "S"
+internal fun narrowDayRes(dow: DayOfWeek): Int = when (dow) {
+    DayOfWeek.MONDAY -> R.string.dow_narrow_monday
+    DayOfWeek.TUESDAY -> R.string.dow_narrow_tuesday
+    DayOfWeek.WEDNESDAY -> R.string.dow_narrow_wednesday
+    DayOfWeek.THURSDAY -> R.string.dow_narrow_thursday
+    DayOfWeek.FRIDAY -> R.string.dow_narrow_friday
+    DayOfWeek.SATURDAY -> R.string.dow_narrow_saturday
+    DayOfWeek.SUNDAY -> R.string.dow_narrow_sunday
 }
 
 // ── Calorie hero ─────────────────────────────────────────────────────
