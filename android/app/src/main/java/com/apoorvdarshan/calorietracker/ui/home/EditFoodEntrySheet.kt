@@ -536,18 +536,20 @@ fun EditFoodEntrySheet(
             item {
                 SheetPillRow {
                     Text(stringResource(R.string.sheet_name), fontSize = 17.sp, modifier = Modifier.padding(end = 8.dp))
-                    Spacer(Modifier.weight(1f))
+                    // Long names ("Bruin stokbrood met gekookte Gelderse worst") wrap
+                    // onto extra lines instead of being cut off.
                     androidx.compose.foundation.text.BasicTextField(
                         value = name,
                         onValueChange = { name = it },
-                        singleLine = true,
+                        singleLine = false,
+                        maxLines = 4,
                         textStyle = androidx.compose.ui.text.TextStyle(
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 17.sp,
                             textAlign = androidx.compose.ui.text.style.TextAlign.End
                         ),
                         cursorBrush = androidx.compose.ui.graphics.SolidColor(AppColors.Calorie),
-                        modifier = Modifier.weight(2f)
+                        modifier = Modifier.weight(1f)
                     )
                 }
             }
