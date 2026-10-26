@@ -619,9 +619,9 @@ private fun SavedMealRow(
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                MacroTag("P", entry.protein)
-                MacroTag("C", entry.carbs)
-                MacroTag("F", entry.fat)
+                MacroTag(stringResource(R.string.macro_letter_protein), entry.protein)
+                MacroTag(stringResource(R.string.macro_letter_carbs), entry.carbs)
+                MacroTag(stringResource(R.string.macro_letter_fat), entry.fat)
             }
         }
 

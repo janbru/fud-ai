@@ -564,6 +564,9 @@
     <string name="nutrition_label_protein">Eiwit</string>
     <string name="nutrition_label_carbs">Koolhydraten</string>
     <string name="nutrition_label_fat">Vet</string>
+    <string name="macro_letter_protein">E</string>
+    <string name="macro_letter_carbs">K</string>
+    <string name="macro_letter_fat">V</string>
     <string name="nutrition_label_sugar">Suiker</string>
     <string name="nutrition_label_added_sugar">Toegevoegde suiker</string>
     <string name="nutrition_label_fiber">Vezels</string>

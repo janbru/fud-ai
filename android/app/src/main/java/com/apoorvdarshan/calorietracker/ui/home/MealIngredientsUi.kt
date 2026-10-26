@@ -131,9 +131,9 @@ internal fun MealIngredientsCard(
                         )
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                        IngredientMacro("P", ingredient.protein, AppColors.Protein)
-                        IngredientMacro("C", ingredient.carbs, AppColors.Carbs)
-                        IngredientMacro("F", ingredient.fat, AppColors.Fat)
+                        IngredientMacro(stringResource(R.string.macro_letter_protein), ingredient.protein, AppColors.Protein)
+                        IngredientMacro(stringResource(R.string.macro_letter_carbs), ingredient.carbs, AppColors.Carbs)
+                        IngredientMacro(stringResource(R.string.macro_letter_fat), ingredient.fat, AppColors.Fat)
                     }
                 }
             }

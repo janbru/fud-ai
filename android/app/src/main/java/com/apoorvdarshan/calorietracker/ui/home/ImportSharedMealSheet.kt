@@ -72,7 +72,7 @@ fun ImportSharedMealSheet(
                     Column(Modifier.weight(1f)) {
                         Text(meal.name, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                         Text(
-                            "${meal.protein.roundToInt()}P · ${meal.carbs.roundToInt()}C · ${meal.fat.roundToInt()}F",
+                            "${meal.protein.roundToInt()}${stringResource(R.string.macro_letter_protein)} · ${meal.carbs.roundToInt()}${stringResource(R.string.macro_letter_carbs)} · ${meal.fat.roundToInt()}${stringResource(R.string.macro_letter_fat)}",
                             fontSize = 13.sp,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                         )

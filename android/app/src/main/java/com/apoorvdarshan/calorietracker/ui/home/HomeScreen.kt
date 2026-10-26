@@ -1968,7 +1968,7 @@ private fun MealSectionHeader(
                     color = AppColors.Calorie
                 )
                 Text(
-                    "${totalProtein.roundToInt()}P · ${totalCarbs.roundToInt()}C · ${totalFat.roundToInt()}F",
+                    "${totalProtein.roundToInt()}${stringResource(R.string.macro_letter_protein)} · ${totalCarbs.roundToInt()}${stringResource(R.string.macro_letter_carbs)} · ${totalFat.roundToInt()}${stringResource(R.string.macro_letter_fat)}",
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
                     fontWeight = FontWeight.Medium,
@@ -2653,9 +2653,9 @@ private fun FoodRow(
 
             // Macro pills (P / C / F) — tinted dark capsules with gray text.
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                MacroChip("P", entry.protein)
-                MacroChip("C", entry.carbs)
-                MacroChip("F", entry.fat)
+                MacroChip(stringResource(R.string.macro_letter_protein), entry.protein)
+                MacroChip(stringResource(R.string.macro_letter_carbs), entry.carbs)
+                MacroChip(stringResource(R.string.macro_letter_fat), entry.fat)
             }
         }
     }

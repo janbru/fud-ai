@@ -525,6 +525,10 @@
     <string name="nutrition_label_protein">Protein</string>
     <string name="nutrition_label_carbs">Carbs</string>
     <string name="nutrition_label_fat">Fat</string>
+    <!-- Single-letter macro badges next to protein / carbs / fat values. -->
+    <string name="macro_letter_protein">P</string>
+    <string name="macro_letter_carbs">C</string>
+    <string name="macro_letter_fat">F</string>
     <string name="nutrition_label_sugar">Sugar</string>
     <string name="nutrition_label_added_sugar">Added Sugar</string>
     <string name="nutrition_label_fiber">Fiber</string>
