@@ -48,7 +48,9 @@ data class WidgetSnapshot(
     val waterGoalMl: Int = 2_000,
     val waterUnitRaw: String = WaterUnit.Default.storageValue,
     /** Energy display unit. Calorie fields stay kcal; widgets convert. Default keeps old snapshots kcal. */
-    val energyUnitRaw: String = EnergyUnit.Default.storageValue
+    val energyUnitRaw: String = EnergyUnit.Default.storageValue,
+    /** Localized by the writer; the default keeps snapshots written before this field decodable. */
+    val waterLabel: String = "Water"
 ) {
     val caloriesRemaining: Int get() = maxOf(0, calorieGoal - calories)
     val energyUnit: EnergyUnit get() = EnergyUnit.fromStorage(energyUnitRaw)
@@ -95,7 +97,7 @@ data class WidgetSnapshot(
     private val waterHomeNutrient: WidgetNutrient
         get() = WidgetNutrient(
             id = "water",
-            label = "Water",
+            label = waterLabel,
             unit = if (waterUnit == WaterUnit.FLUID_OUNCES) " fl oz" else "ml",
             value = waterUnit.displayAmount(waterCurrentMl),
             goal = waterUnit.displayAmount(waterGoalMl)

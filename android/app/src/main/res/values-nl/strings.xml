@@ -20,6 +20,9 @@
     <string name="widget_kcal_left_format">%1$d kcal over</string>
     <string name="widget_kj_left_format">%1$d kJ over</string>
     <string name="widget_g_left_format">%1$dg over</string>
+    <string name="widget_left_format">%1$s over</string>
+    <string name="widget_water_tracking">Waterregistratie</string>
+    <string name="widget_enable_in_app">Inschakelen in Fud AI</string>
     <string name="widget_kcal">kcal</string>
     <string name="widget_protein_g">eiwit g</string>
     <string name="widget_value_unit_format">%1$d%2$s / %3$d%4$s</string>

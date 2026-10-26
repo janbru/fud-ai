@@ -2,6 +2,7 @@ package com.apoorvdarshan.calorietracker.services
 
 import android.content.Context
 import androidx.compose.ui.graphics.toArgb
+import com.apoorvdarshan.calorietracker.R
 import com.apoorvdarshan.calorietracker.data.FoodRepository
 import com.apoorvdarshan.calorietracker.data.PreferencesStore
 import com.apoorvdarshan.calorietracker.data.ProfileRepository
@@ -108,7 +109,8 @@ class WidgetSnapshotWriter(
                 waterCurrentMl = waterTodayMl,
                 waterGoalMl = water.goalMl.coerceAtLeast(1),
                 waterUnitRaw = water.unit.storageValue,
-                energyUnitRaw = energyUnit.storageValue
+                energyUnitRaw = energyUnit.storageValue,
+                waterLabel = context.getString(R.string.widget_water)
             )
             prefs.setWidgetSnapshot(snapshot)
         }

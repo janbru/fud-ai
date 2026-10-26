@@ -20,6 +20,9 @@
     <string name="widget_kcal_left_format">%1$d kcal left</string>
     <string name="widget_kj_left_format">%1$d kJ left</string>
     <string name="widget_g_left_format">%1$dg left</string>
+    <string name="widget_left_format">%1$s left</string>
+    <string name="widget_water_tracking">Water Tracking</string>
+    <string name="widget_enable_in_app">Enable in Fud AI</string>
     <string name="widget_kcal">kcal</string>
     <string name="widget_protein_g">protein g</string>
     <string name="widget_value_unit_format">%1$d%2$s / %3$d%4$s</string>

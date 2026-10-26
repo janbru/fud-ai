@@ -101,7 +101,7 @@ private fun CalorieSmall(snapshot: WidgetSnapshot) {
     val gaugeW = minOf(contentW, (contentH - 44f) / 0.58f).toInt().coerceAtLeast(80)
 
     Column(modifier = GlanceModifier.fillMaxSize()) {
-        WidgetHeader(iconRes = R.drawable.ic_widget_flame, label = "Today")
+        WidgetHeader(iconRes = R.drawable.ic_widget_flame, label = LocalContext.current.getString(R.string.widget_today))
         Box(
             modifier = GlanceModifier.fillMaxWidth().defaultWeight(),
             contentAlignment = Alignment.Center

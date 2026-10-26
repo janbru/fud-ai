@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
@@ -109,7 +110,7 @@ private fun ProteinSmall(snapshot: WidgetSnapshot) {
             )
         }
         Text(
-            text = "${MacroValueFormatter.string(remaining)}${nutrient.unit} left",
+            text = LocalContext.current.getString(R.string.widget_left_format, "${MacroValueFormatter.string(remaining)}${nutrient.unit}"),
             style = TextStyle(
                 color = WidgetTheme.themeTextProvider(snapshot.themeStartHex),
                 fontWeight = FontWeight.Medium,
@@ -143,7 +144,7 @@ private fun ProteinMedium(snapshot: WidgetSnapshot) {
             )
             Spacer(modifier = GlanceModifier.height(2.dp))
             Text(
-                text = "${MacroValueFormatter.string(remaining)}${nutrient.unit} left",
+                text = LocalContext.current.getString(R.string.widget_left_format, "${MacroValueFormatter.string(remaining)}${nutrient.unit}"),
                 style = TextStyle(
                     color = WidgetTheme.themeTextProvider(snapshot.themeStartHex),
                     fontWeight = FontWeight.Medium,
