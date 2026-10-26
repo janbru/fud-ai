@@ -800,7 +800,7 @@ fun EditFoodEntrySheet(
                         )
                         Spacer(Modifier.width(12.dp))
                         Text(
-                            if (isFavorite) "Remove from Favorites" else "Save to Favorites",
+                            stringResource(if (isFavorite) R.string.food_favorite_remove else R.string.food_favorite_add),
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Medium,
                             color = AppColors.Calorie
@@ -822,7 +822,7 @@ fun EditFoodEntrySheet(
                         )
                         Spacer(Modifier.width(12.dp))
                         Text(
-                            "Delete Food Log",
+                            stringResource(R.string.food_delete_action),
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.error
@@ -889,9 +889,9 @@ fun EditFoodEntrySheet(
     }
     if (showDeleteConfirmation) {
         FudGlassDialog(onDismissRequest = { showDeleteConfirmation = false }) {
-            Text("Delete Food Log?", fontSize = 21.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.food_delete_title), fontSize = 21.sp, fontWeight = FontWeight.Bold)
             Text(
-                "This removes the food from your diary. Saved favorites are kept.",
+                stringResource(R.string.food_delete_message),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.68f),
                 fontSize = 15.sp,
                 lineHeight = 21.sp

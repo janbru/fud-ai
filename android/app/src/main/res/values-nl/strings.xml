@@ -509,6 +509,15 @@
     <string name="context_note_title">Notitie toevoegen</string>
     <string name="context_note_section">Voeg een notitie toe (optioneel)</string>
     <string name="context_note_placeholder">bijv. zonder olie, extra kaas, grote portie</string>
+    <string name="food_delete_title">Voedsellog verwijderen?</string>
+    <string name="food_delete_message">Hiermee verwijder je het voedsel uit je dagboek. Opgeslagen favorieten blijven behouden.</string>
+    <string name="food_delete_action">Voedsellog verwijderen</string>
+    <string name="water_delete_title">Waterlog verwijderen?</string>
+    <string name="water_delete_message">Hiermee verwijder je de wateritem uit je dagboek.</string>
+    <string name="fasting_delete_title">Vastenlog verwijderen?</string>
+    <string name="fasting_delete_message">Hiermee verwijder je de voltooide vastenperiode uit je dagboek.</string>
+    <string name="food_favorite_remove">Verwijderen uit favorieten</string>
+    <string name="food_favorite_add">Opslaan in favorieten</string>
     <string name="allergen_declared_match">Opgegeven allergeen gevonden</string>
     <string name="allergen_possible">Mogelijk allergeen</string>
     <string name="allergen_unable_to_assess">Kan niet beoordelen</string>

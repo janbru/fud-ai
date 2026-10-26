@@ -895,14 +895,14 @@ CalorieHero(
 
     pendingDiaryDeletion?.let { target ->
         val title = when (target) {
-            is HomeDiaryItem.Food -> "Delete Food Log?"
-            is HomeDiaryItem.Water -> "Delete Water Log?"
-            is HomeDiaryItem.Fasting -> "Delete Fasting Log?"
+            is HomeDiaryItem.Food -> stringResource(R.string.food_delete_title)
+            is HomeDiaryItem.Water -> stringResource(R.string.water_delete_title)
+            is HomeDiaryItem.Fasting -> stringResource(R.string.fasting_delete_title)
         }
         val message = when (target) {
-            is HomeDiaryItem.Food -> "This removes the food from your diary. Saved favorites are kept."
-            is HomeDiaryItem.Water -> "This removes the water entry from your diary."
-            is HomeDiaryItem.Fasting -> "This removes the completed fast from your diary."
+            is HomeDiaryItem.Food -> stringResource(R.string.food_delete_message)
+            is HomeDiaryItem.Water -> stringResource(R.string.water_delete_message)
+            is HomeDiaryItem.Fasting -> stringResource(R.string.fasting_delete_message)
         }
         FudGlassDialog(onDismissRequest = { pendingDiaryDeletion = null }) {
             Text(title, fontSize = 21.sp, fontWeight = FontWeight.Bold)
