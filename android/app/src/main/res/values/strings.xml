@@ -1015,6 +1015,11 @@
     <string name="settings_adaptive_goals_info">About once a week when you open the app, Fud AI automatically re-runs the full goal calculation — the same one the Recalculate button uses — from your profile, recent logged food, and weight trend. If Energy Burn is on, it uses your measured burn as the maintenance anchor. It skips silently if the AI is unavailable. Turning this off restores the targets from before Adaptive Goals first changed them. This is not medical advice.</string>
     <string name="settings_refresh_energy_goals">Refresh Energy Burn Goals</string>
     <string name="settings_clear_food_log">Clear Food Log</string>
+    <string name="settings_health_raw_data">Raw Health Connect Data</string>
+    <string name="settings_health_raw_data_show">Show</string>
+    <string name="settings_health_raw_data_hide">Hide</string>
+    <string name="settings_health_raw_data_refresh">Refresh</string>
+    <string name="settings_health_raw_data_copy">Copy</string>
     <string name="settings_delete_all_data">Delete All Data</string>
     <string name="storage_title">Storage</string>
     <string name="storage_saved_photos">Saved Photos</string>

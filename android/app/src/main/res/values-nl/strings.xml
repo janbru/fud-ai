@@ -940,6 +940,11 @@
     <string name="storage_saved_photos">Opgeslagen foto’s</string>
     <string name="storage_on_device_models">Modellen op apparaat</string>
     <string name="storage_cache">Cache</string>
+    <string name="settings_health_raw_data">Ruwe Health Connect-gegevens</string>
+    <string name="settings_health_raw_data_show">Tonen</string>
+    <string name="settings_health_raw_data_hide">Verbergen</string>
+    <string name="settings_health_raw_data_refresh">Vernieuwen</string>
+    <string name="settings_health_raw_data_copy">Kopiëren</string>
     <string name="storage_compress_photos">Foto’s comprimeren</string>
     <string name="storage_clear_cache">Cache wissen</string>
     <string name="storage_footer">Foto’s comprimeren verkleint foto’s groter dan 2048 px blijvend. Cache wissen verwijdert miniaturen en gedownloade oefenafbeeldingen; die worden opnieuw gemaakt wanneer nodig. Verwijder modellen op het apparaat via hun AI- of spraakinstellingen.</string>

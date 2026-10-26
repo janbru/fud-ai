@@ -1,6 +1,7 @@
 package com.apoorvdarshan.calorietracker.ui.components
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -34,8 +36,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apoorvdarshan.calorietracker.R
 import com.apoorvdarshan.calorietracker.models.MacroValueFormatter
+import com.apoorvdarshan.calorietracker.ui.home.BudgetAmber
 import com.apoorvdarshan.calorietracker.ui.navigation.LocalLaunchFillEpoch
 import com.apoorvdarshan.calorietracker.ui.theme.AppColors
+
+private val BAR_WIDTH = 16.dp
+private val BAR_HEIGHT = 64.dp
+private const val MAX_OVER_RATIO = 1.5f
+private val OVER_PILL_MIN_EXTRA = 8.dp
 
 /**
  * A single macro shown as a vertical fill bar (rounded tube that fills bottom-up toward the goal),
@@ -52,6 +60,19 @@ fun MacroCard(
     gradientColors: List<Color> = listOf(AppColors.CalorieStart, AppColors.CalorieEnd)
 ) {
     val progress = if (goal > 0) (current / goal).toFloat().coerceIn(0f, 1f) else 0f
+    // Above the goal the base tube stays full and the bar grows taller instead: the excess
+    // stacks on top as an amber pill, so the goal height of every bar keeps the same scale.
+    val extraHeight = if (goal > 0 && current > goal) {
+        (BAR_HEIGHT * ((current / goal).toFloat() - 1f).coerceIn(0f, MAX_OVER_RATIO - 1f))
+            .coerceAtLeast(OVER_PILL_MIN_EXTRA)
+    } else {
+        0.dp
+    }
+    val animatedExtraHeight by animateDpAsState(
+        targetValue = extraHeight,
+        animationSpec = spring(dampingRatio = 0.85f, stiffness = 55f),
+        label = "macroExtraHeight"
+    )
     // Fill-from-zero on app open (see CalorieHero). Saveable lastEpoch survives tab
     // switches so only a real app-open replays the fill; tab returns snap.
     val epoch = LocalLaunchFillEpoch.current
@@ -101,7 +122,7 @@ fun MacroCard(
 
         // Vertical fill bar (rounded tube, fills bottom-up)
         Box(
-            modifier = Modifier.size(width = 16.dp, height = 64.dp),
+            modifier = Modifier.size(width = BAR_WIDTH, height = BAR_HEIGHT + animatedExtraHeight),
             contentAlignment = Alignment.BottomCenter
         ) {
             Box(
@@ -110,10 +131,28 @@ fun MacroCard(
                     .clip(CircleShape)
                     .background(firstColor.copy(alpha = 0.12f))
             )
-            val fillHeight = (64.dp * animated).coerceAtLeast(16.dp)
+            if (animatedExtraHeight > 0.dp) {
+                // Sits behind the base tube, whose rounded top caps into the pill's body.
+                val overlap = BAR_WIDTH / 2
+                Box(
+                    Modifier
+                        .offset(y = -(BAR_HEIGHT - overlap))
+                        .width(BAR_WIDTH)
+                        .height(animatedExtraHeight + overlap)
+                        .shadow(
+                            elevation = 5.dp,
+                            shape = CircleShape,
+                            ambientColor = BudgetAmber.copy(alpha = 0.5f),
+                            spotColor = BudgetAmber.copy(alpha = 0.5f)
+                        )
+                        .clip(CircleShape)
+                        .background(BudgetAmber)
+                )
+            }
+            val fillHeight = (BAR_HEIGHT * animated).coerceAtLeast(BAR_WIDTH)
             Box(
                 Modifier
-                    .width(16.dp)
+                    .width(BAR_WIDTH)
                     .height(fillHeight)
                     .shadow(
                         elevation = 5.dp,

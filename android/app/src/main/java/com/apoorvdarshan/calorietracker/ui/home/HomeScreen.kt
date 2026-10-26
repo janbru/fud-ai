@@ -586,7 +586,8 @@ CalorieHero(
                         Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.Bottom
                     ) {
                         ui.homeTopNutrients.take(4).forEach { nutrient ->
                             MacroCard(

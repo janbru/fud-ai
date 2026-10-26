@@ -1581,6 +1581,10 @@ fun SettingsScreen(
                     icon = Icons.Outlined.Link,
                     onClick = ::openHealthConnectAccess
                 )
+                if (ui.healthConnectEnabled) {
+                    HorizontalDivider()
+                    HealthConnectRawDataRows(container.health)
+                }
             }
             }
 

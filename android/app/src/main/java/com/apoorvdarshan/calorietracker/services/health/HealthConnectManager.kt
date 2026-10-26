@@ -966,6 +966,125 @@ class HealthConnectManager(
         return DailyEnergy(active = active, total = total)
     }
 
+    // -- Raw data (Settings reference / debugging) ------------------------
+
+    /**
+     * Plain-text dump of what Health Connect hands this app for the last [days] days: the granted
+     * permissions, the raw records per type (newest first, capped at [RAW_DUMP_RECORD_CAP] each)
+     * and the daily aggregates the app derives its numbers from. Types that are not readable are
+     * listed as such instead of failing the whole dump. Only for the Settings debug view.
+     */
+    suspend fun readRawDump(days: Int = 7): String {
+        val c = client ?: return "Health Connect client unavailable"
+        val zone = ZoneId.systemDefault()
+        val today = LocalDate.now(zone)
+        val start = today.minusDays((days - 1).toLong()).atStartOfDay(zone).toInstant()
+        val end = today.plusDays(1).atStartOfDay(zone).toInstant()
+        val range = TimeRangeFilter.between(start, end)
+        val g = granted()
+        val out = StringBuilder()
+
+        fun section(title: String) { out.append("\n== ").append(title).append(" ==\n") }
+        fun origin(m: Metadata) = m.dataOrigin.packageName
+        fun fmt(v: Double) = if (v % 1.0 == 0.0) v.toLong().toString() else "%.2f".format(java.util.Locale.US, v)
+
+        out.append("window ").append(start).append(" .. ").append(end).append(" (").append(zone).append(")\n")
+        out.append("sdk_status=").append(HealthConnectClient.getSdkStatus(context, HEALTH_CONNECT_PROVIDER_PACKAGE)).append('\n')
+        section("permissions")
+        (connectPermissions + backgroundRead).sorted().forEach {
+            out.append(if (it in g) "[x] " else "[ ] ").append(it.removePrefix("android.permission.health.")).append('\n')
+        }
+
+        suspend fun <R : androidx.health.connect.client.records.Record> records(
+            title: String,
+            type: kotlin.reflect.KClass<R>,
+            readPermission: String,
+            line: (R) -> String
+        ) {
+            section(title)
+            if (readPermission !in g) { out.append("no read permission\n"); return }
+            val all = mutableListOf<R>()
+            var pageToken: String? = null
+            var failed = false
+            do {
+                val response = runCatching {
+                    c.readRecords(ReadRecordsRequest(type, range, pageToken = pageToken))
+                }.getOrElse { failed = true; out.append("read failed: ").append(it.javaClass.simpleName).append('\n'); null }
+                    ?: break
+                all += response.records
+                pageToken = response.pageToken
+            } while (pageToken != null && all.size < RAW_DUMP_RECORD_CAP * 4)
+            if (failed) return
+            out.append(all.size).append(" records\n")
+            all.sortedByDescending { it.metadata.lastModifiedTime }.take(RAW_DUMP_RECORD_CAP).forEach {
+                out.append(line(it)).append('\n')
+            }
+            if (all.size > RAW_DUMP_RECORD_CAP) out.append("... ").append(all.size - RAW_DUMP_RECORD_CAP).append(" more\n")
+        }
+
+        records("Steps", StepsRecord::class, stepsRead) {
+            "${it.startTime} → ${it.endTime} count=${it.count} src=${origin(it.metadata)}"
+        }
+        records("ActiveCaloriesBurned", ActiveCaloriesBurnedRecord::class, activeEnergyRead) {
+            "${it.startTime} → ${it.endTime} kcal=${fmt(it.energy.inKilocalories)} src=${origin(it.metadata)}"
+        }
+        records("TotalCaloriesBurned", TotalCaloriesBurnedRecord::class, totalEnergyRead) {
+            "${it.startTime} → ${it.endTime} kcal=${fmt(it.energy.inKilocalories)} src=${origin(it.metadata)}"
+        }
+        records("ExerciseSession", ExerciseSessionRecord::class, exerciseRead) {
+            "${it.startTime} → ${it.endTime} type=${it.exerciseType} title=${it.title ?: "-"} src=${origin(it.metadata)}"
+        }
+        records("Weight", WeightRecord::class, weightRead) {
+            "${it.time} kg=${fmt(it.weight.inKilograms)} src=${origin(it.metadata)} client=${it.metadata.clientRecordId ?: "-"}"
+        }
+        records("BodyFat", BodyFatRecord::class, bodyFatRead) {
+            "${it.time} pct=${fmt(it.percentage.value)} src=${origin(it.metadata)} client=${it.metadata.clientRecordId ?: "-"}"
+        }
+        records("Nutrition", NutritionRecord::class, nutritionRead) {
+            val fields = listOf(
+                "kcal" to it.energy?.inKilocalories,
+                "protein" to it.protein?.inGrams,
+                "carbs" to it.totalCarbohydrate?.inGrams,
+                "fat" to it.totalFat?.inGrams,
+                "fiber" to it.dietaryFiber?.inGrams,
+                "sugar" to it.sugar?.inGrams,
+                "satFat" to it.saturatedFat?.inGrams,
+                "sodium_mg" to it.sodium?.inMilligrams
+            ).filter { (_, v) -> v != null }.joinToString(" ") { (k, v) -> "$k=${fmt(v!!)}" }
+            "${it.startTime} meal=${it.mealType} name=${it.name ?: "-"} $fields src=${origin(it.metadata)} " +
+                "client=${it.metadata.clientRecordId ?: "-"}"
+        }
+
+        section("Daily aggregates (as the app reads them)")
+        for (offset in 0 until days) {
+            val date = today.minusDays(offset.toLong())
+            val dayStart = date.atStartOfDay(zone).toInstant()
+            val dayEnd = date.plusDays(1).atStartOfDay(zone).toInstant()
+            val agg = runCatching {
+                c.aggregate(
+                    AggregateRequest(
+                        metrics = setOf(
+                            StepsRecord.COUNT_TOTAL,
+                            ActiveCaloriesBurnedRecord.ACTIVE_CALORIES_TOTAL,
+                            TotalCaloriesBurnedRecord.ENERGY_TOTAL
+                        ),
+                        timeRangeFilter = TimeRangeFilter.between(dayStart, dayEnd)
+                    )
+                )
+            }.getOrNull()
+            out.append(date).append(' ')
+            if (agg == null) {
+                out.append("aggregate failed\n")
+            } else {
+                out.append("steps=").append(agg[StepsRecord.COUNT_TOTAL] ?: "-")
+                    .append(" active_kcal=").append(agg[ActiveCaloriesBurnedRecord.ACTIVE_CALORIES_TOTAL]?.inKilocalories?.let(::fmt) ?: "-")
+                    .append(" total_kcal=").append(agg[TotalCaloriesBurnedRecord.ENERGY_TOTAL]?.inKilocalories?.let(::fmt) ?: "-")
+                    .append('\n')
+            }
+        }
+        return out.toString()
+    }
+
     // -- Change observation (external weight imports) --------------------
 
     /** Opaque token used to fetch incremental changes. Call once, persist, pass back later.
@@ -1064,6 +1183,7 @@ class HealthConnectManager(
 
     companion object {
         private const val TAG = "HealthConnectManager"
+        private const val RAW_DUMP_RECORD_CAP = 100
         private val lastLoggedAvailabilityKey = AtomicReference<String?>(null)
         private val writeVersions = HealthWriteVersions()
 
