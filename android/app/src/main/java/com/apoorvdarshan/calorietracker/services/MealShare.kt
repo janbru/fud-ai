@@ -3,6 +3,7 @@ package com.apoorvdarshan.calorietracker.services
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.apoorvdarshan.calorietracker.R
 import com.apoorvdarshan.calorietracker.models.FoodEntry
 import com.apoorvdarshan.calorietracker.models.FoodProductMetadata
 import com.apoorvdarshan.calorietracker.models.FoodSource
@@ -102,7 +103,7 @@ object MealShare {
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, shareText(entries, shareLink))
         }
-        context.startActivity(Intent.createChooser(send, "Share meal"))
+        context.startActivity(Intent.createChooser(send, context.getString(R.string.cd_share_meal)))
     }
 
     /** Human-readable summary plus the import link — the text put on the share sheet. */
