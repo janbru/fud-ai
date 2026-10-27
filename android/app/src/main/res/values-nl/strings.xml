@@ -488,6 +488,13 @@
     <string name="energy_balance_deficit_format">%1$s tekort</string>
     <string name="energy_balance_surplus_format">%1$s overschot</string>
     <string name="energy_balance_balanced">In balans</string>
+    <string name="day_summary_title">Dagsamenvatting</string>
+    <string name="day_summary_card_subtitle">Hoe de dag ging en wat beter kan</string>
+    <string name="day_summary_loading">Je dag wordt bekeken…</string>
+    <string name="day_summary_stale">Je logboek van deze dag is veranderd na het schrijven van deze samenvatting.</string>
+    <string name="day_summary_update">Samenvatting bijwerken</string>
+    <string name="day_summary_regenerate">Nieuwe samenvatting schrijven</string>
+    <string name="day_summary_failed">De samenvatting kon niet worden geschreven</string>
     <string name="home_todays_food">Eten van vandaag</string>
     <string name="home_no_foods_logged">Geen voedsel geregistreerd</string>
     <string name="home_swipe_delete">Verwijder</string>

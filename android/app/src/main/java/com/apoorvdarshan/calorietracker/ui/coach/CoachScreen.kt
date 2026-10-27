@@ -1368,7 +1368,7 @@ private fun inlineMarkdown(text: String, linkColor: Color, codeBg: Color): Annot
 }
 
 @Composable
-private fun MarkdownText(content: String, color: Color) {
+internal fun MarkdownText(content: String, color: Color) {
     val linkColor = AppColors.Calorie
     val codeBg = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f)
     val blocks = remember(content) { parseMarkdownBlocks(content) }

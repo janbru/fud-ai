@@ -178,6 +178,7 @@ import com.apoorvdarshan.calorietracker.models.QuickActionRequest
 import com.apoorvdarshan.calorietracker.models.ServingUnitOption
 import com.apoorvdarshan.calorietracker.models.WaterEntry
 import com.apoorvdarshan.calorietracker.models.WaterUnit
+import com.apoorvdarshan.calorietracker.services.ai.DayReport
 import com.apoorvdarshan.calorietracker.services.ai.FoodAnalysis
 import com.apoorvdarshan.calorietracker.ui.components.InAppCameraCaptureDialog
 import com.apoorvdarshan.calorietracker.ui.components.LocalEnergyUnit
@@ -199,6 +200,7 @@ import com.apoorvdarshan.calorietracker.ui.theme.AppColors
 import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
@@ -258,6 +260,7 @@ DisposableEffect(lifecycleOwner, vm) {
     var selectedFoodIds by remember { mutableStateOf<Set<UUID>>(emptySet()) }
     val selectionMode = selectedFoodIds.isNotEmpty()
     var showNutritionDetail by remember { mutableStateOf(false) }
+    var showDaySummary by remember { mutableStateOf(false) }
     var showCustomWaterLog by remember { mutableStateOf(false) }
     var showFastingStart by remember { mutableStateOf(false) }
     var editingFast by remember { mutableStateOf<FastingSession?>(null) }
@@ -637,6 +640,15 @@ CalorieHero(
                         )
                     }
                     Box(Modifier.padding(top = 8.dp)) { WeekBudgetCard(weekBudget) }
+                }
+            }
+
+            // End-of-day AI summary: once the day is over and it has something logged.
+            if (ui.profile != null && ui.todayEntries.isNotEmpty() &&
+                DayReport.isComplete(selectedDate, today, LocalTime.now())
+            ) {
+                item(key = "day-summary") {
+                    DaySummaryCard(onClick = { showDaySummary = true }, modifier = Modifier.padding(top = 8.dp))
                 }
             }
 
@@ -1130,6 +1142,10 @@ CalorieHero(
             onHomeTopNutrientsChange = vm::setHomeTopNutrients,
             onDismiss = { showNutritionDetail = false }
         )
+    }
+
+    if (showDaySummary) {
+        DaySummarySheet(container = container, date = selectedDate, onDismiss = { showDaySummary = false })
     }
 
     if (ui.analyzing) AnalyzingOverlay(imageBytes = ui.pendingImageBytes, onCancel = vm::cancelAnalysis)

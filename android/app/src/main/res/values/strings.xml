@@ -464,6 +464,13 @@
     <string name="energy_balance_deficit_format">%1$s deficit</string>
     <string name="energy_balance_surplus_format">%1$s surplus</string>
     <string name="energy_balance_balanced">Balanced</string>
+    <string name="day_summary_title">Day summary</string>
+    <string name="day_summary_card_subtitle">How the day went and what to do better</string>
+    <string name="day_summary_loading">Reviewing your day…</string>
+    <string name="day_summary_stale">Your log for this day changed after this summary was written.</string>
+    <string name="day_summary_update">Update summary</string>
+    <string name="day_summary_regenerate">Write a new summary</string>
+    <string name="day_summary_failed">Could not write the summary</string>
     <string name="home_todays_food">Today\'s Food</string>
     <string name="home_no_foods_logged">No foods logged</string>
     <string name="home_swipe_delete">Delete</string>
