@@ -19,6 +19,7 @@ import com.apoorvdarshan.calorietracker.models.AutoBalanceMacro
 import com.apoorvdarshan.calorietracker.models.BodyFatEntry
 import com.apoorvdarshan.calorietracker.models.BodyMeasurement
 import com.apoorvdarshan.calorietracker.models.ChatMessage
+import com.apoorvdarshan.calorietracker.models.DaySummary
 import com.apoorvdarshan.calorietracker.models.FoodEntry
 import com.apoorvdarshan.calorietracker.models.FastingSession
 import com.apoorvdarshan.calorietracker.models.HomeTopNutrient
@@ -1177,6 +1178,15 @@ class PreferencesStore(
         }
     }
 
+    /** The user's rewrite of the day summary's style instructions. Empty = the built-in default. */
+    val daySummaryPrompt: Flow<String> = ds.data.map { it[Keys.DAY_SUMMARY_PROMPT].orEmpty() }
+    suspend fun setDaySummaryPrompt(value: String) {
+        val trimmed = value.trim()
+        ds.edit {
+            if (trimmed.isEmpty()) it.remove(Keys.DAY_SUMMARY_PROMPT) else it[Keys.DAY_SUMMARY_PROMPT] = trimmed
+        }
+    }
+
     // -- Recalculate nudge -----------------------------------------------
     // Fingerprint of the goal inputs at the last Recalculate. When it differs from the current
     // profile, Settings shows a soft "recalculate suggested" hint. null = no baseline yet.
@@ -1532,6 +1542,12 @@ class PreferencesStore(
         ds.edit { it[Keys.CHAT_HISTORY] = json.encodeToString(ListSerializer(ChatMessage.serializer()), history) }
     }
 
+    // -- Day summaries ----------------------------------------------------
+    val daySummaries: Flow<List<DaySummary>> = jsonListFlow(Keys.DAY_SUMMARIES, DaySummary.serializer())
+
+    suspend fun updateDaySummaries(transform: (List<DaySummary>) -> List<DaySummary>): List<DaySummary> =
+        updateJsonList(Keys.DAY_SUMMARIES, DaySummary.serializer(), transform)
+
     // -- Voice assistant --------------------------------------------------
     /** Settings → Voice Assistant, read together so a session starts from one snapshot. */
     val voiceAssistantPreferences: Flow<VoiceAssistantPreferences> = ds.data.map { readVoiceAssistantPreferences(it) }
@@ -1705,6 +1721,8 @@ class PreferencesStore(
         val BODY_FAT_ENTRIES = stringPreferencesKey("bodyFatEntries")
         val BODY_MEASUREMENTS = stringPreferencesKey("bodyMeasurements")
         val CHAT_HISTORY = stringPreferencesKey("coachChatHistory")
+        val DAY_SUMMARIES = stringPreferencesKey("daySummaries")
+        val DAY_SUMMARY_PROMPT = stringPreferencesKey("daySummaryPrompt")
         val WIDGET_SNAPSHOT = stringPreferencesKey("widget_snapshot_v1")
         val VOICE_PROVIDER = stringPreferencesKey("voiceAssistantProvider")
         val VOICE_LANGUAGE = stringPreferencesKey("voiceAssistantLanguage")

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.apoorvdarshan.calorietracker.data.BodyFatRepository
 import com.apoorvdarshan.calorietracker.data.BodyMeasurementRepository
 import com.apoorvdarshan.calorietracker.data.ChatRepository
+import com.apoorvdarshan.calorietracker.data.DaySummaryRepository
 import com.apoorvdarshan.calorietracker.data.ExerciseRepository
 import com.apoorvdarshan.calorietracker.data.FoodRepository
 import com.apoorvdarshan.calorietracker.data.FastingRepository
@@ -295,6 +296,7 @@ class AppContainer(app: FudAIApp) {
     val bodyFatRepository = BodyFatRepository(prefs, profileRepository, health)
     val bodyMeasurementRepository = BodyMeasurementRepository(prefs)
     val chatRepository = ChatRepository(prefs)
+    val daySummaryRepository = DaySummaryRepository(prefs)
     val waterRepository = WaterRepository(prefs)
     val fastingRepository = FastingRepository(prefs)
     val workoutRepository = WorkoutRepository(prefs, workoutHealthSync)
