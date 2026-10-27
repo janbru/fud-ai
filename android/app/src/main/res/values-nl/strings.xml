@@ -1580,4 +1580,24 @@
     <string name="cd_clear_quantity">Hoeveelheid wissen</string>
     <string name="cd_hold_to_record">Ingedrukt houden om op te nemen, tikken om te vergrendelen</string>
     <string name="cd_cancel_recording">Opname annuleren</string>
+    <string name="inflammation_title">Ontstekingsbalans</string>
+    <string name="inflammation_lean_anti">Neigt naar ontstekingsremmend</string>
+    <string name="inflammation_lean_neutral">In balans</string>
+    <string name="inflammation_lean_pro">Neigt naar ontstekingsbevorderend</string>
+    <string name="inflammation_track_anti">Ontstekingsremmend</string>
+    <string name="inflammation_track_pro">Ontstekingsbevorderend</string>
+    <string name="inflammation_card_helping">Helpt: %1$s</string>
+    <string name="inflammation_card_pushing">Duwt omhoog: %1$s</string>
+    <string name="inflammation_card_low">Laag: %1$s</string>
+    <string name="inflammation_coverage">Gebaseerd op %1$d van %2$d voedingsstoffen die je hebt gelogd</string>
+    <string name="inflammation_section_anti">Ontstekingsremmende voedingsstoffen</string>
+    <string name="inflammation_section_pro">Ontstekingsbevorderende voedingsstoffen</string>
+    <string name="inflammation_about_title">Wat dit is</string>
+    <string name="inflammation_about_body">Een schatting op basis van de voedingsstoffen die je hebt gelogd, per calorie afgezet tegen je eigen doelen. Het volgt het idee achter onderzoeksscores zoals de Dietary Inflammatory Index, die eetpatronen koppelen aan bloedwaarden als CRP en IL-6. Het is geen bloedtest en geen medisch advies. Voedingsstoffen die je niet hebt gelogd tellen niet mee, ze tellen niet als nul.</string>
+    <string name="inflammation_research_title">Wat het onderzoek zegt</string>
+    <string name="inflammation_research_pattern">Het sterkste bewijs gaat over hele eetpatronen, niet over losse producten. Een meta-analyse uit 2025 van 33 trials vond dat een mediterraan dieet hs-CRP, IL-6 en IL-17 verlaagde.</string>
+    <string name="inflammation_research_omega3">Omega-3 uit vis verlaagt CRP tot ongeveer 1,2 g EPA en DHA per dag bij mensen met cardiometabole aandoeningen. Veel hogere doses zijn populair online, maar niet duidelijk beter.</string>
+    <string name="inflammation_research_fiber">Vezels en gevarieerde plantaardige voeding gaan samen met minder ontsteking in cohortstudies. Trials laten een duidelijker effect zien op TNF-alfa dan op CRP.</string>
+    <string name="inflammation_research_omega6">Omega-6 uit plantaardige oliën telt hier niet als ontstekingsbevorderend, omdat trials niet laten zien dat het ontstekingswaarden verhoogt.</string>
+    <string name="inflammation_research_limits">Het meeste bewijs is observationeel en één dag zegt weinig. Het patroon over weken telt zwaarder.</string>
 </resources>

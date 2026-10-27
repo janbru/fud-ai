@@ -5,6 +5,7 @@ import com.apoorvdarshan.calorietracker.models.FastingSession
 import com.apoorvdarshan.calorietracker.models.FoodEntry
 import com.apoorvdarshan.calorietracker.models.HomeTopNutrient
 import com.apoorvdarshan.calorietracker.models.ImportedHealthWorkout
+import com.apoorvdarshan.calorietracker.models.InflammationBalance
 import com.apoorvdarshan.calorietracker.models.MealType
 import com.apoorvdarshan.calorietracker.models.OptionalNutrientGoals
 import com.apoorvdarshan.calorietracker.models.UserProfile
@@ -81,6 +82,7 @@ internal object DayReport {
             "nutrients" to nutrients(dayFoods, input),
             "meals" to dayFoods.sortedBy { it.timestamp }.map { meal(it, zone) }
         )
+        inflammationSection(dayFoods, input)?.let { report["inflammation"] = it }
         waterSection(input)?.let { report["water"] = it }
         fastingSection(input)?.let { report["fasting"] = it }
         activitySection(input)?.let { report["activity"] = it }
@@ -112,6 +114,7 @@ internal object DayReport {
         appendLine("Rules:")
         appendLine("- Use only this data. Do not call tools; everything you need is below.")
         appendLine("- \"nutrients\" lists the day's totals against targets. A micronutrient total only counts meals where the value was recorded, so a low or missing value can mean it was not recorded. Say so instead of calling it a deficiency.")
+        appendLine("- \"inflammation\" is a rough estimate from the recorded nutrients, modelled on research diet scores. It is not a measurement of my body. Mention it at most briefly and only when it helps explain the day, tied to specific foods. Make no medical claims.")
         appendLine("- \"previous_days\" is for comparison only. Do not summarize those days.")
         appendLine("- Missing \"water\", \"fasting\" or \"activity\" sections mean that was not tracked. Do not scold me for it.")
         appendLine("- Do not invent meals, numbers or medical claims.")
@@ -168,6 +171,23 @@ internal object DayReport {
                     "percent_of_target" to if (goal > 0) (total / goal * 100).roundToInt() else null
                 )
             }
+
+    /** Left out when too little was recorded to estimate; see [InflammationBalance]. */
+    private fun inflammationSection(dayFoods: List<FoodEntry>, input: DayReportInput): Map<String, Any?>? {
+        val balance = InflammationBalance.evaluate(
+            dayFoods,
+            input.optionalGoals,
+            input.profile.effectiveCalories
+        ) ?: return null
+        return linkedMapOf(
+            "leans" to balance.lean.name.lowercase(Locale.ENGLISH),
+            "score" to round2(balance.score),
+            "nutrients_assessed" to "${balance.assessedCount} of ${balance.possibleCount}",
+            "helping" to balance.helping.map { it.nutrient.displayName },
+            "lacking" to balance.lacking.map { it.nutrient.displayName },
+            "pushing_up" to balance.pushing.map { it.nutrient.displayName }
+        )
+    }
 
     private fun waterSection(input: DayReportInput): Map<String, Any?>? {
         val goal = input.waterGoalMl ?: return null

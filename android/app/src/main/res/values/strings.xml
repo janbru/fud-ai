@@ -1601,4 +1601,24 @@
     <string name="workout_rpe_help_strength">Optional—how hard this set felt. Strength scale: 1 = very easy; 10 = maximum effort. Decimals are allowed. Leave blank if unsure.</string>
     <string name="workout_rpe_help_cr10">Optional—how hard this set felt. CR10 scale: 0 = no effort; 10 = maximum effort. Decimals are allowed. Leave blank if unsure.</string>
     <string name="workout_rpe_help_borg">Optional—how hard this set felt. Borg scale: 6 = no exertion; 20 = maximum exertion. Use whole numbers. Leave blank if unsure.</string>
+    <string name="inflammation_title">Inflammation balance</string>
+    <string name="inflammation_lean_anti">Leans anti-inflammatory</string>
+    <string name="inflammation_lean_neutral">Balanced</string>
+    <string name="inflammation_lean_pro">Leans pro-inflammatory</string>
+    <string name="inflammation_track_anti">Anti-inflammatory</string>
+    <string name="inflammation_track_pro">Pro-inflammatory</string>
+    <string name="inflammation_card_helping">Helping: %1$s</string>
+    <string name="inflammation_card_pushing">Pushing up: %1$s</string>
+    <string name="inflammation_card_low">Low: %1$s</string>
+    <string name="inflammation_coverage">Based on the %1$d of %2$d nutrients you logged</string>
+    <string name="inflammation_section_anti">Anti-inflammatory nutrients</string>
+    <string name="inflammation_section_pro">Pro-inflammatory nutrients</string>
+    <string name="inflammation_about_title">What this is</string>
+    <string name="inflammation_about_body">An estimate from the nutrients you logged, weighed per calorie against your own goals. It follows the idea behind research diet scores such as the Dietary Inflammatory Index, which link eating patterns to blood markers like CRP and IL-6. It is not a blood test and not medical advice. Nutrients you did not log are left out, not counted as zero.</string>
+    <string name="inflammation_research_title">What the research says</string>
+    <string name="inflammation_research_pattern">The best evidence is for whole eating patterns, not single foods. A 2025 meta-analysis of 33 trials found a Mediterranean diet lowered hs-CRP, IL-6 and IL-17.</string>
+    <string name="inflammation_research_omega3">Omega-3 from fish lowers CRP up to about 1.2 g EPA and DHA a day in people with cardiometabolic disease. Much higher doses are popular online but not clearly better.</string>
+    <string name="inflammation_research_fiber">Fiber and plant variety go with lower inflammation in cohort studies. Trials show a clearer effect on TNF-alpha than on CRP.</string>
+    <string name="inflammation_research_omega6">Omega-6 from vegetable oils is not counted as inflammatory here, because trials do not show that it raises inflammatory markers.</string>
+    <string name="inflammation_research_limits">Most of the evidence is observational, and one day says little. The pattern over weeks matters more.</string>
 </resources>

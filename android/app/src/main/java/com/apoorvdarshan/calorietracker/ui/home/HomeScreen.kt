@@ -163,6 +163,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.apoorvdarshan.calorietracker.R
 import com.apoorvdarshan.calorietracker.AppContainer
 import com.apoorvdarshan.calorietracker.models.FoodEntry
+import com.apoorvdarshan.calorietracker.models.InflammationBalance
 import com.apoorvdarshan.calorietracker.models.FastingSession
 import com.apoorvdarshan.calorietracker.models.formatFastingDuration
 import com.apoorvdarshan.calorietracker.ui.components.rememberMealSharer
@@ -261,6 +262,7 @@ DisposableEffect(lifecycleOwner, vm) {
     val selectionMode = selectedFoodIds.isNotEmpty()
     var showNutritionDetail by remember { mutableStateOf(false) }
     var showDaySummary by remember { mutableStateOf(false) }
+    var showInflammation by remember { mutableStateOf(false) }
     var showCustomWaterLog by remember { mutableStateOf(false) }
     var showFastingStart by remember { mutableStateOf(false) }
     var editingFast by remember { mutableStateOf<FastingSession?>(null) }
@@ -623,6 +625,16 @@ CalorieHero(
                     ui.homeBurnSummary?.let { summary ->
                         Spacer(Modifier.height(4.dp))
                         EnergyBalanceCard(summary)
+                    }
+                    val inflammation = remember(ui.todayEntries, ui.optionalNutrientGoals, ui.profile?.effectiveCalories) {
+                        ui.profile?.let {
+                            InflammationBalance.evaluate(ui.todayEntries, ui.optionalNutrientGoals, it.effectiveCalories)
+                        }
+                    }
+                    inflammation?.let { balance ->
+                        Spacer(Modifier.height(8.dp))
+                        InflammationCard(balance, onClick = { showInflammation = true })
+                        if (showInflammation) InflammationSheet(balance, onDismiss = { showInflammation = false })
                     }
                 }
             }
