@@ -109,6 +109,8 @@ data class SettingsUiState(
     /** Rest countdown after a logged set, in seconds; 0 = off. */
     val workoutRestTimerSeconds: Int = com.apoorvdarshan.calorietracker.models.WorkoutRestTimerSetting.DEFAULT_SECONDS,
     val userContext: String = "",
+    /** The saved rewrite of the day summary prompt; empty = the built-in default. */
+    val daySummaryPrompt: String = "",
     val fallbackEnabled: Boolean = false,
     val fallbackProvider: AIProvider = AIProvider.GEMINI,
     val fallbackModel: String = AIProvider.GEMINI.defaultModel,
@@ -290,6 +292,7 @@ class SettingsViewModel(val container: AppContainer) : ViewModel() {
             val weekMon = container.prefs.weekStartsOnMonday.first()
             val mealSchedule = container.prefs.mealSchedule.first()
             val userContext = container.prefs.userContext.first()
+            val daySummaryPrompt = container.prefs.daySummaryPrompt.first()
             val maxTokens = container.prefs.maxResponseTokens.first()
             val requestTimeoutSeconds = container.prefs.aiRequestTimeoutSeconds.first()
             val fbEnabled = container.prefs.fallbackEnabled.first()
@@ -372,6 +375,7 @@ class SettingsViewModel(val container: AppContainer) : ViewModel() {
                     weekStartsOnMonday = weekMon,
                     mealSchedule = mealSchedule,
                     userContext = userContext,
+                    daySummaryPrompt = daySummaryPrompt,
                     fallbackEnabled = fbEnabled,
                     fallbackProvider = fbProvider,
                     fallbackModel = fbModel,
@@ -534,6 +538,13 @@ class SettingsViewModel(val container: AppContainer) : ViewModel() {
         viewModelScope.launch {
             container.prefs.setUserContext(value)
             _ui.value = _ui.value.copy(userContext = value.trim())
+        }
+    }
+
+    fun setDaySummaryPrompt(value: String) {
+        viewModelScope.launch {
+            container.prefs.setDaySummaryPrompt(value)
+            _ui.value = _ui.value.copy(daySummaryPrompt = value.trim())
         }
     }
 

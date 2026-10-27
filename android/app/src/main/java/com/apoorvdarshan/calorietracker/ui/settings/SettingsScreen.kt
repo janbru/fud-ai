@@ -197,6 +197,7 @@ import com.apoorvdarshan.calorietracker.models.WorkoutSplit
 import com.apoorvdarshan.calorietracker.export.DiaryImportMode
 import com.apoorvdarshan.calorietracker.export.DiaryImportPreview
 import com.apoorvdarshan.calorietracker.export.DiaryImporter
+import com.apoorvdarshan.calorietracker.services.ai.DayReport
 import com.apoorvdarshan.calorietracker.services.health.HealthAvailabilityMessageKind
 import com.apoorvdarshan.calorietracker.services.health.HealthConnectAvailability
 import com.apoorvdarshan.calorietracker.services.health.healthAvailabilityMessageKind
@@ -1513,6 +1514,19 @@ fun SettingsScreen(
                 )
                 Text(
                     stringResource(R.string.settings_custom_instructions_footer),
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.55f),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
+                )
+            }
+
+            SectionCard(title = stringResource(R.string.settings_section_day_summary_prompt)) {
+                DaySummaryPromptBlock(
+                    saved = ui.daySummaryPrompt,
+                    onSave = { vm.setDaySummaryPrompt(it) }
+                )
+                Text(
+                    stringResource(R.string.settings_day_summary_prompt_footer),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.55f),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
@@ -4795,6 +4809,55 @@ private fun CustomInstructionsBlock(
                 color = if (hasChanges) AppColors.Calorie else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
                 fontWeight = FontWeight.SemiBold
             )
+        }
+    }
+}
+
+/** Editor for the day summary's style instructions; shows the built-in default until the user changes it. */
+@Composable
+private fun DaySummaryPromptBlock(saved: String, onSave: (String) -> Unit) {
+    val default = DayReport.DEFAULT_STYLE
+    val current = saved.ifEmpty { default }
+    var text by remember(current) { mutableStateOf(current) }
+    var stored by remember(current) { mutableStateOf(current) }
+    val hasChanges = text.trim() != stored.trim()
+    fun commit(value: String) {
+        val trimmed = value.trim()
+        // The default is stored as "empty" so a later improvement to it still reaches this user.
+        onSave(if (trimmed == default) "" else trimmed)
+        stored = trimmed
+        text = trimmed
+    }
+    Column(Modifier.padding(horizontal = 16.dp, vertical = 10.dp)) {
+        FudGlassTextField(
+            value = text,
+            onValueChange = { text = it },
+            placeholder = default,
+            modifier = Modifier.fillMaxWidth().heightIn(min = 160.dp),
+            singleLine = false,
+            minLines = 7,
+            maxLines = 14
+        )
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            TextButton(
+                onClick = { commit(default) },
+                enabled = text.trim() != default,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.settings_day_summary_prompt_reset), fontWeight = FontWeight.SemiBold)
+            }
+            TextButton(
+                onClick = { commit(text) },
+                enabled = hasChanges && text.isNotBlank(),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    stringResource(R.string.settings_save),
+                    color = if (hasChanges) AppColors.Calorie else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
         }
     }
 }

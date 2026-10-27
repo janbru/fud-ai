@@ -1011,6 +1011,9 @@
     <string name="settings_section_custom_instructions">Custom AI Instructions</string>
     <string name="settings_custom_instructions_placeholder">e.g. I live in Germany, assume European portion sizes, prefer ALDI/REWE brands. I\'m on a bodybuilding cut.</string>
     <string name="settings_custom_instructions_footer">Optional context sent with every AI request — region, diet, athletic goals, anything you\'d otherwise repeat each time. Leave empty to disable.</string>
+    <string name="settings_section_day_summary_prompt">Day Summary Prompt</string>
+    <string name="settings_day_summary_prompt_footer">How the AI writes your end-of-day summary: length, tone and layout. The language, your data and the rules for using it are added automatically. Write it in English or in your own language.</string>
+    <string name="settings_day_summary_prompt_reset">Reset to default</string>
     <string name="settings_save">Save</string>
     <string name="settings_saved">Saved</string>
 
